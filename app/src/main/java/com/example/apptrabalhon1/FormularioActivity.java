@@ -1,6 +1,8 @@
 package com.example.apptrabalhon1;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ public class FormularioActivity extends AppCompatActivity {
     private Spinner spCategorias;
     private EditText etAnalise;
     private Button btnSalvar;
+    private Button btnExcluir;
     private String acao;
     private Filme filme;
 
@@ -28,6 +31,7 @@ public class FormularioActivity extends AppCompatActivity {
         spCategorias = findViewById(R.id.spCategorias);
         etAnalise = findViewById(R.id.etAnalise);
         btnSalvar = findViewById( R.id.btnSalvar );
+        btnExcluir = findViewById(R.id.btnExcluir);
 
         acao = getIntent().getStringExtra("acao");
         if( acao.equals("editar")){
@@ -38,6 +42,13 @@ public class FormularioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 salvar();
+            }
+        });
+
+        btnExcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                excluir();
             }
         });
 
@@ -97,6 +108,34 @@ public class FormularioActivity extends AppCompatActivity {
         }
     }
 
+    private void excluir() {
+        if (spAno.getSelectedItemPosition() == 0 || etNome.getText().toString().isEmpty() || spCategorias.getSelectedItemPosition() == 0 || etAnalise.getText().toString().isEmpty()) {
+
+            Toast.makeText(this, "Não é possível excluir um item que não foi cadastrado.", Toast.LENGTH_SHORT).show();
+
+        } else {
+            AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+            alerta.setIcon(android.R.drawable.ic_input_delete);
+            alerta.setTitle(R.string.txtAtencao);
+            alerta.setMessage("Confirma a exclusão do filme " + filme.nome+"?");
+            alerta.setNeutralButton("Cancelar", null);
+            alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    FilmeDAO.excluir( filme.id, FormularioActivity.this);
+                    etNome.setText("");
+                    spAno.setSelection(0);
+                    spCategorias.setSelection(0, true);
+                    etAnalise.setText("");
+                }
+            });
+            alerta.show();
+        }
+  
+        }
+    }
 
 
-}
+
+
+

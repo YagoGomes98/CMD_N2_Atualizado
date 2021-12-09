@@ -28,6 +28,7 @@ public class FilmeDAO {
         valores.put("ano", filme.getAno() );
         valores.put("categoria", filme.getCategoria().toString());
         valores.put("analise", filme.getAnalise().toString());
+
         Banco banco = new Banco(context);
         SQLiteDatabase db = banco.getWritableDatabase();
 

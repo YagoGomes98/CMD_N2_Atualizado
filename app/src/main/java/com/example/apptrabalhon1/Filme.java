@@ -8,6 +8,7 @@ public class Filme {
     public String nome;
     public String categoria;
     public String analise;
+
     private int ano;
 
     public Filme() {
@@ -19,6 +20,7 @@ public class Filme {
         this.setAno( ano );
         this.categoria = categoria;
         this.analise = analise;
+
     }
 
     public Filme(int id, String nome, int ano, String categoria, String analise) {
@@ -27,6 +29,7 @@ public class Filme {
         this.setAno(ano);
         this.categoria = categoria;
         this.analise = analise;
+
     }
 
     public int getAno() {
